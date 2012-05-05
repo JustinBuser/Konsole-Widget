@@ -1,0 +1,19 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Konsole Widget
+Name[en]=Konsole Widget
+Comment=Resizable Popup Konsole with transparency and desktop size and position retainment
+Type=Service
+ServiceTypes=Plasma/Applet,Plasma/PopupApplet,Plasma/IconWidget
+Icon=utilities-terminal
+X-Plasma-API=python
+X-Plasma-MainScript=code/main.py
+X-KDE-PluginInfo-Author=Justin Buser
+X-KDE-PluginInfo-Email=development@buserbrothers.com
+X-KDE-PluginInfo-Name=KonsoleWidget
+X-KDE-PluginInfo-Version=1.2
+X-KDE-PluginInfo-Website=http://buserbrothers.com/
+X-KDE-PluginInfo-Category=Utilities
+X-KDE-PluginInfo-Depends=PYQT
+X-KDE-PluginInfo-License=GPL
+X-KDE-PluginInfo-EnabledByDefault=true
