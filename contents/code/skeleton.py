@@ -17,22 +17,15 @@
 #
 import os
 
-from PyQt4.QtCore import QRect
-#from PyQt4.QtGui import *
-from PyKDE4.kdecore import *
+from PyQt4.QtGui import *
 from PyKDE4.kdeui import *
-#from PyKDE4.kio import *
+from PyKDE4.kio import *
 
 class Bones(KConfigSkeleton):
-    saveSize = bool(True)
-    savePosition = bool(True)
-    autoHide = bool(False)
-    
-    def __init__(configname,parent=0):
-        KConfigSkeleton.__init__(KGlobal.config(),parent)
-        setCurrentGroup("CoreConfig")
-        
-        addItemBool("saveSize", saveSize, True)
-        addItemBool("savePosition", savePosition, True)
-        addItemBool("autoHide", autoHide, False)
-        addItemRect("storedGeometry",storedGeometry,QRect(0,0,600,400))
+    def __init__(self):
+        KConfigSkeleton.__init__(self)
+        self.setCurrentGroup("settings")
+        self.saveSize = self.addItemBool("saveSize", True, True)
+        self.savePosition = self.addItemBool("savePosition", True, True)
+        self.autoHide = self.addItemBool("autoHide", False, False)
+        self.readConfig()

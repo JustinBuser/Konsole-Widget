@@ -26,6 +26,7 @@ from PyKDE4.plasma import Plasma
 from PyKDE4 import plasmascript
 from PyKDE4.kparts import KParts
 from configuration import MainOptions
+from skeleton import Bones
 
 class KonsoleMainPart(QGraphicsWidget):
     
@@ -58,11 +59,6 @@ class KonsoleMainPart(QGraphicsWidget):
             self.parent.addAssociatedWidget(self.consoleWidget)
             self.consoleWidget.setFocus()
             actionCollection = self.actions
-            #self.pasteAction = actionCollection.addAction(KStandardAction.Paste,self,SLOT(edit_paste()))
-            #self.pasteAction.setShortcut(Qt.CTRL + Qt.SHIFT + Qt.Key_P)
-            #self.connect(self.pasteAction, SIGNAL("triggered"), self, SLOT(edit_paste()))
-            #pasteAction = KAction(  KIcon("stock_paste"), i18n("&Paste"), self.parent )
-            #KStandardShortcut.shortcut(KStandardShortcut.Paste), self.consoleWidget, SLOT(edit_paste()), KActionCollection.allCollections() ) 
             pasteAction = KStandardAction.paste(self) 
             pasteShortcut = pasteAction.shortcut()
             pasteShortcut.setAlternate(Qt.CTRL + Qt.SHIFT + Qt.Key_V)
@@ -74,6 +70,7 @@ class KonsoleWidget(plasmascript.Applet):
         self.setApplet(Plasma.Applet(parent, []))
         self.parent = parent
         self.sizeMin = QSizeF(200, 100)
+        self.bones = Bones()
     
     def debugHandler(self, type, msg):
         if str(msg).find("plasma-desktop") < 0:
@@ -145,7 +142,6 @@ class KonsoleWidget(plasmascript.Applet):
         self.setGraphicsWidget(self.widget)    
         self.extConfig.sync()
         self.connect(self.applet, SIGNAL("geometryChanged()"), self.saveGeometry)
-        #self.addAssociatedWidget(self.widget)
         
     def configAccepted(self):
         self.savesize = self.mainOptions.savesize
@@ -162,16 +158,15 @@ class KonsoleWidget(plasmascript.Applet):
         self.mainOptions = MainOptions(self.savesize,self.saveposition,self.autohide)
         p = parent.addPage(self.mainOptions, ki18n("Misc Options").toString())
         p.setIcon( KIcon("utilities-terminal") )
-        #parent.addPage(General(0, "General"), i18n("General"))
         self.connect(parent, SIGNAL("okClicked()"), self.configAccepted)
         self.connect(parent, SIGNAL("cancelClicked()"), self.mainOptions.deleteLater)
 
     def showConfigurationInterface(self):
-        dialog = KConfigDialog(self.parent, "Konsole Widget Settings",)
+	self.bones = Bones()
+        dialog = KConfigDialog(self.parent, "Konsole Widget Settings", self.bones)
         dialog.setFaceType(KPageDialog.List)
         dialog.setButtons(KDialog.ButtonCode(KDialog.Ok | KDialog.Cancel))
         self.createConfigurationInterface(dialog)
-        #dialog.resize(300,200)
         dialog.exec_()
 
 class KonsoleWidgetIcon(Plasma.IconWidget):
