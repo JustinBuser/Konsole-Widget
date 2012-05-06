@@ -63,4 +63,4 @@ class MainOptions(QWidget):
     def retranslateUi(self):
         self.saveSize.setText( ki18n("Save size of Dashboard Plasmoid when resized (Uncheck after resizing to always use that size)").toString() )
         self.savePosition.setText( ki18n("Save position of Dashboard Plasmoid when moved (Uncheck after moving to always use those coordinates)").toString() )
-        self.autoHide.setText( ki18n("Keep the popup Konsole open until it's icon is clicked again, even if it loses focus").toString() )
+        self.autoHide.setText( ki18n("Keep the popup Konsole open until its icon is clicked again, even if it loses focus").toString() )
