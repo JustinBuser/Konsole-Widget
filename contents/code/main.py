@@ -54,7 +54,7 @@ class KonsoleMainPart(QGraphicsWidget):
             self.consoleWidget.setFocus()
             self.layout.addItem(self.centralWidget)
             self.layout.setAlignment(self.centralWidget, Qt.AlignLeft)
-            self.connect(self.konsole,SIGNAL("destroyed()"),self.createKonsole)
+            self.konsole.destroyed.connect(self.createKonsole)
             self.parent.setGraphicsWidget(self)
             self.parent.addAssociatedWidget(self.consoleWidget)
             self.consoleWidget.setFocus()
@@ -141,7 +141,7 @@ class KonsoleWidget(plasmascript.Applet):
         self.applet.setPopupIcon(KIcon("utilities-terminal"))
         self.setGraphicsWidget(self.widget)    
         self.extConfig.sync()
-        self.connect(self.applet, SIGNAL("geometryChanged()"), self.saveGeometry)
+        self.applet.geometryChanged.connect(self.saveGeometry)
         
     def configAccepted(self):
         self.savesize = self.mainOptions.savesize
@@ -158,8 +158,8 @@ class KonsoleWidget(plasmascript.Applet):
         self.mainOptions = MainOptions(self.savesize,self.saveposition,self.autohide)
         p = parent.addPage(self.mainOptions, ki18n("Misc Options").toString())
         p.setIcon( KIcon("utilities-terminal") )
-        self.connect(parent, SIGNAL("okClicked()"), self.configAccepted)
-        self.connect(parent, SIGNAL("cancelClicked()"), self.mainOptions.deleteLater)
+        parent.okClicked.connect(self.configAccepted)
+        parent.cancelClicked.connect(self.mainOptions.deleteLater)
 
     def showConfigurationInterface(self):
 	self.bones = Bones()
