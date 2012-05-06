@@ -32,7 +32,7 @@ class KonsoleMainPart(QGraphicsWidget):
 
     def __init__(self, parent, args=None):
 
-        super(KonsoleMainPart, self).__init__(parent)
+        super(KonsoleMainPart, self).__init__(args)
         self.applet = parent.applet
         self.setMinimumSize(parent.sizeMin)
         self.parent = parent
