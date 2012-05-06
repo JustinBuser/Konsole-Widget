@@ -59,7 +59,7 @@ class MainOptions(QWidget):
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.autoHide)
         self.verticalLayout.addWidget(self.widget)
 
-        self.savesize.stateChanged[int].connect(self.checkboxStateChanged)
+        self.saveSize.stateChanged[int].connect(self.checkboxStateChanged)
         self.savePosition.stateChanged[int].connect(
             self.checkboxStateChanged)
         self.autoHide.stateChanged[int].connect(
