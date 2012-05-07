@@ -24,43 +24,64 @@ from PyKDE4.kdeui import *
 from PyKDE4.kio import *
 
 class MainOptions(QWidget):
+
     savesize = True
     saveposition = True
     autohide = True
 
-    def __init__(self, savesize, saveposition, autohide):
+    def __init__(self, savesize, saveposition, autohide, parent=None):
+
+        super(MainOptions, self).__init__(parent)
+
         QWidget.__init__(self)
         self.savesize = savesize
+
         self.saveposition = saveposition
         self.autohide = autohide
+
         self.verticalLayout = QVBoxLayout(self)
         self.widget = QWidget(self)
         self.formLayout = QFormLayout(self.widget)
         self.saveSize = QCheckBox(self.widget)
         self.savePosition = QCheckBox(self.widget)
         self.autoHide = QCheckBox(self.widget)
+
         if savesize:
             self.saveSize.setCheckState(Qt.Checked)
         if saveposition:
             self.savePosition.setCheckState(Qt.Checked)
         if autohide:
             self.autoHide.setCheckState(Qt.Checked)
+
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.saveSize)
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.savePosition)
+        self.formLayout.setWidget(2, QFormLayout.FieldRole,
+                                  self.savePosition)
         self.formLayout.setWidget(3, QFormLayout.FieldRole, self.autoHide)
         self.verticalLayout.addWidget(self.widget)
-        self.connect(self.saveSize, SIGNAL("stateChanged(int)"), self.checkboxStateChanged)
-        self.connect(self.savePosition, SIGNAL("stateChanged(int)"), self.checkboxStateChanged)
-        self.connect(self.autoHide, SIGNAL("stateChanged(int)"), self.checkboxStateChanged)
+
+        self.saveSize.stateChanged[int].connect(self.checkboxStateChanged)
+        self.savePosition.stateChanged[int].connect(
+            self.checkboxStateChanged)
+        self.autoHide.stateChanged[int].connect(
+            self.checkboxStateChanged)
+
         self.retranslateUi()
 
     @pyqtSignature("int")
     def checkboxStateChanged(self, i):
+
         self.savesize = True if self.saveSize.checkState() else False
         self.saveposition = True if self.savePosition.checkState() else False
         self.autohide = True if self.autoHide.checkState() else False
 
     def retranslateUi(self):
-        self.saveSize.setText( ki18n("Save size of Dashboard Plasmoid when resized (Uncheck after resizing to always use that size)").toString() )
-        self.savePosition.setText( ki18n("Save position of Dashboard Plasmoid when moved (Uncheck after moving to always use those coordinates)").toString() )
-        self.autoHide.setText( ki18n("Keep the popup Konsole open until its icon is clicked again, even if it loses focus").toString() )
+        self.saveSize.setText(ki18n("Save size of Dashboard Plasmoid"
+                                     " when resized (Uncheck after resizing "
+                                      "to always use that size)").toString())
+        self.savePosition.setText(ki18n("Save position of Dashboard Plasmoid"
+                                         " when moved (Uncheck after moving"
+                                         " to always use those coordinates)"
+                                         ).toString())
+        self.autoHide.setText(ki18n("Keep the popup Konsole open until its"
+                                     " icon is clicked again, even if it"
+                                     "loses focus").toString())
