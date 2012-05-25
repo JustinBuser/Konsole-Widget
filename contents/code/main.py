@@ -40,7 +40,8 @@ class KonsoleMainPart(QGraphicsWidget):
     def init(self, x, y, width, height):
 
         self.applet.setGeometry(x, y, width, height)
-        self.factory = KPluginLoader("libkonsolepart").factory()
+        service = KService.serviceByDesktopName("konsolepart");
+        self.factory = KPluginLoader(service.library()).factory()
         self.layout = QGraphicsLinearLayout(Qt.Vertical, self)
         self.createKonsole()
 
