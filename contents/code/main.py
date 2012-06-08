@@ -194,7 +194,7 @@ class KonsoleWidget(plasmascript.Applet):
 
     def showConfigurationInterface(self):
 
-	self.bones = Bones()
+        self.bones = Bones()
 
         dialog = KConfigDialog(self.parent, "Konsole Widget Settings", self.bones)
         dialog.setFaceType(KPageDialog.List)
